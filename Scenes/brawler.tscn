@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://djy75ghrogulu"]
+
+[ext_resource type="Texture2D" uid="uid://dxfwp50as7tcx" path="res://Assets/icon.svg" id="1_jqfj0"]
+[ext_resource type="Script" path="res://Scripts/brawler.gd" id="1_qjui0"]
+[ext_resource type="Script" path="res://Scripts/State Machine.gd" id="2_xwlgh"]
+[ext_resource type="Script" path="res://Scripts/EnemyIdle.gd" id="3_uyhfb"]
+[ext_resource type="Script" path="res://Scripts/EnemyFollow.gd" id="5_a3c3o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvc3w"]
+radius = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tsco5"]
+radius = 1280.0
+
+[node name="Brawler" type="CharacterBody2D"]
+script = ExtResource("1_qjui0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jvc3w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.0980392, 1)
+texture = ExtResource("1_jqfj0")
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_xwlgh")
+initial_state = NodePath("EnemyIdle")
+
+[node name="EnemyIdle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("3_uyhfb")
+enemy = NodePath("../..")
+
+[node name="EnemyFollow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("5_a3c3o")
+enemy = NodePath("../..")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_tsco5")

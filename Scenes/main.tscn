@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://rcyelgi322w8"]
+[gd_scene load_steps=4 format=3 uid="uid://rcyelgi322w8"]
 
 [ext_resource type="Texture2D" uid="uid://dxfwp50as7tcx" path="res://Assets/icon.svg" id="1_h1h4b"]
 [ext_resource type="PackedScene" uid="uid://b4pkwoj6hwf41" path="res://Scenes/player.tscn" id="1_t72km"]
+[ext_resource type="PackedScene" uid="uid://djy75ghrogulu" path="res://Scenes/brawler.tscn" id="3_emrco"]
 
 [node name="Main" type="Node"]
 
@@ -13,3 +14,6 @@ scale = Vector2(5.07031, 2.85156)
 texture = ExtResource("1_h1h4b")
 
 [node name="Player" parent="." instance=ExtResource("1_t72km")]
+
+[node name="Brawler" parent="." instance=ExtResource("3_emrco")]
+position = Vector2(524, 205)
