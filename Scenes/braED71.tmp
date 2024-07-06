@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://djy75ghrogulu"]
+
+[ext_resource type="Texture2D" uid="uid://dxfwp50as7tcx" path="res://Assets/icon.svg" id="1_jqfj0"]
+[ext_resource type="Script" path="res://Scripts/brawler.gd" id="1_qjui0"]
+[ext_resource type="Script" path="res://Scripts/State Machine.gd" id="2_xwlgh"]
+[ext_resource type="Script" path="res://Scripts/EnemyIdle.gd" id="3_uyhfb"]
+[ext_resource type="Script" path="res://Scripts/EnemyFollow.gd" id="5_a3c3o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvc3w"]
+radius = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tsco5"]
+radius = 768.0
+
+[node name="Brawler" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 0.0
+script = ExtResource("1_qjui0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jvc3w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0.0980392, 1)
+texture = ExtResource("1_jqfj0")
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_xwlgh")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("3_uyhfb")
+enemy = NodePath("../..")
+
+[node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("5_a3c3o")
+enemy = NodePath("../..")
+
+[node name="Navigation" type="Node2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation"]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="Navigation"]
+wait_time = 0.3
+autostart = true
+
+[node name="Detection" type="Node2D" parent="."]
+
+[node name="DetectionBox" type="Area2D" parent="Detection"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection/DetectionBox"]
+shape = SubResource("CircleShape2D_tsco5")
+debug_color = Color(4.81307e-07, 0.590633, 0.750963, 0.42)
+
+[node name="RayCast2D" type="RayCast2D" parent="Detection"]
+target_position = Vector2(0, 512)
+
+[connection signal="timeout" from="Navigation/Timer" to="State Machine/Follow" method="_on_timer_timeout"]
+[connection signal="body_entered" from="Detection/DetectionBox" to="State Machine/Idle" method="_on_detection_box_body_entered"]

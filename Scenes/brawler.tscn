@@ -1,40 +1,87 @@
-[gd_scene load_steps=8 format=3 uid="uid://djy75ghrogulu"]
+[gd_scene load_steps=10 format=3 uid="uid://djy75ghrogulu"]
 
-[ext_resource type="Texture2D" uid="uid://dxfwp50as7tcx" path="res://Assets/icon.svg" id="1_jqfj0"]
 [ext_resource type="Script" path="res://Scripts/brawler.gd" id="1_qjui0"]
 [ext_resource type="Script" path="res://Scripts/State Machine.gd" id="2_xwlgh"]
 [ext_resource type="Script" path="res://Scripts/EnemyIdle.gd" id="3_uyhfb"]
 [ext_resource type="Script" path="res://Scripts/EnemyFollow.gd" id="5_a3c3o"]
+[ext_resource type="Script" path="res://Scripts/EnemyAttack.gd" id="6_1x2qt"]
+[ext_resource type="Texture2D" uid="uid://bdfur661uuyho" path="res://Assets/Excited-Cartoon-Penis.jpg" id="6_nsnbm"]
+[ext_resource type="Texture2D" uid="uid://cwxjfpuuqy5du" path="res://Assets/white.png" id="7_uq7xs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jvc3w"]
 radius = 64.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tsco5"]
-radius = 1280.0
+[sub_resource type="Curve" id="Curve_o47bn"]
+min_value = 0.2
+_data = [Vector2(0.0714286, 0.2), 0.0, 0.0, 0, 0, Vector2(0.285714, 0.99011), 0.0, 0.0, 0, 0, Vector2(0.818182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="Brawler" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 0.0
 script = ExtResource("1_qjui0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jvc3w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0.0980392, 1)
-texture = ExtResource("1_jqfj0")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_nsnbm")
 
 [node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_xwlgh")
-initial_state = NodePath("EnemyIdle")
+initial_state = NodePath("Idle")
 
-[node name="EnemyIdle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+[node name="Idle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("3_uyhfb")
 enemy = NodePath("../..")
 
-[node name="EnemyFollow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+[node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("5_a3c3o")
 enemy = NodePath("../..")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Attack" type="Node" parent="State Machine" node_paths=PackedStringArray("target")]
+script = ExtResource("6_1x2qt")
+target = NodePath("../..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_tsco5")
+[node name="Navigation" type="Node2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation"]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="Navigation"]
+wait_time = 0.3
+autostart = true
+
+[node name="Sweep" type="RayCast2D" parent="."]
+target_position = Vector2(0, 768)
+
+[node name="AttackArea" type="Node2D" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="AttackArea"]
+emitting = false
+amount = 2000
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.7
+texture = ExtResource("7_uq7xs")
+emission_shape = 4
+emission_points = PackedVector2Array(0, 190, 0, 150, 0, 110)
+emission_colors = PackedColorArray()
+spread = 0.0
+gravity = Vector2(0, 0)
+orbit_velocity_min = 2.0
+orbit_velocity_max = 2.0
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_o47bn")
+color = Color(0.929715, 0.929715, 0.929715, 1)
+
+[node name="RayCast2D" type="RayCast2D" parent="AttackArea"]
+visible = false
+target_position = Vector2(0, 220)
+
+[connection signal="timeout" from="Navigation/Timer" to="State Machine/Follow" method="_on_timer_timeout"]
