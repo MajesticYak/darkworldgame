@@ -11,12 +11,13 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_jvc3w"]
 radius = 64.0
 
-[sub_resource type="Curve" id="Curve_o47bn"]
-min_value = 0.2
-_data = [Vector2(0.0714286, 0.2), 0.0, 0.0, 0, 0, Vector2(0.285714, 0.99011), 0.0, 0.0, 0, 0, Vector2(0.818182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_t0vg8"]
+max_value = 1.2
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.185393, 1.2033), 0.0, 0.0, 0, 0, Vector2(0.808989, 1.2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [node name="Brawler" type="CharacterBody2D"]
+scale = Vector2(0.1, 0.1)
 motion_mode = 1
 wall_min_slide_angle = 0.0
 floor_stop_on_slope = false
@@ -43,9 +44,8 @@ enemy = NodePath("../..")
 script = ExtResource("5_a3c3o")
 enemy = NodePath("../..")
 
-[node name="Attack" type="Node" parent="State Machine" node_paths=PackedStringArray("target")]
+[node name="Attack" type="Node" parent="State Machine"]
 script = ExtResource("6_1x2qt")
-target = NodePath("../..")
 
 [node name="Navigation" type="Node2D" parent="."]
 
@@ -56,14 +56,11 @@ debug_enabled = true
 wait_time = 0.3
 autostart = true
 
-[node name="Sweep" type="RayCast2D" parent="."]
-target_position = Vector2(0, 768)
-
 [node name="AttackArea" type="Node2D" parent="."]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="AttackArea"]
 emitting = false
-amount = 2000
+amount = 1000
 lifetime = 0.25
 one_shot = true
 explosiveness = 0.7
@@ -77,11 +74,15 @@ orbit_velocity_min = 2.0
 orbit_velocity_max = 2.0
 scale_amount_min = 0.1
 scale_amount_max = 0.1
-scale_amount_curve = SubResource("Curve_o47bn")
+scale_amount_curve = SubResource("Curve_t0vg8")
 color = Color(0.929715, 0.929715, 0.929715, 1)
 
 [node name="RayCast2D" type="RayCast2D" parent="AttackArea"]
 visible = false
 target_position = Vector2(0, 220)
+
+[node name="Sweep" type="RayCast2D" parent="."]
+scale = Vector2(1, 1)
+target_position = Vector2(0, 768)
 
 [connection signal="timeout" from="Navigation/Timer" to="State Machine/Follow" method="_on_timer_timeout"]

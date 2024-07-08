@@ -3,9 +3,11 @@ class_name EnemyIdle
 
 @export var enemy : CharacterBody2D
 @export var move_speed := 20.0
+@onready var tile_map = $/root/Main/World/TileMap
 @onready var ray_cast = $"../../Sweep"
-@onready var tile_map = $".../.../.../World/TileMap"
 
+var dynamic_target : CharacterBody2D
+var static_target : Vector2
 var move_direction : Vector2
 var wander_time : float
 var can_random = true
@@ -18,6 +20,8 @@ func randomize_wander():
 	can_random = true
 	
 func Enter():
+	dynamic_target = null
+	findTarget()
 	randomize_wander()
 	
 func Update(delta: float):
@@ -26,30 +30,26 @@ func Update(delta: float):
 	elif can_random:
 		randomize_wander()
 		can_random = false
-	var target = await get_closest_body()
-	if target:
+	if dynamic_target or static_target:
+		$"../Follow".dynamic_target = dynamic_target
+		$"../Follow".static_target = static_target
 		Transitioned.emit(self, "Follow")
-		$"../Follow".target = target
 
 func Physics_Update(_delta: float):
 	if enemy:
 		enemy.velocity = move_direction * move_speed
 
-func get_closest_body(): #and visible
-	var locatedTargets = []
-	var targetDistance = []
+func findTarget(): #and visible
 	for i in range(41):
 		ray_cast.rotation = i * .157
-		await get_tree().create_timer(.5).timeout
-		if ray_cast.is_colliding():
-			var hitBody = ray_cast.get_collider_rid()
-			if (locatedTargets.find(hitBody) == -1):
-				locatedTargets.append(hitBody)
-				targetDistance.append((ray_cast.get_collision_point() - enemy.position).length())
-	if locatedTargets.size() != 0:
-		var rid = locatedTargets[targetDistance.find(targetDistance.min())]
-		var instance = instance_from_id(rid.get_id())
-		if instance is CharacterBody2D:
-			return instance.position
-		elif instance is TileMap:
-			return tile_map.map_to_local(tile_map.get_coords_for_body_rid(rid))
+		await get_tree().create_timer(.01).timeout
+		var hitBody = ray_cast.get_collider()
+		if hitBody != null:
+			if hitBody.is_in_group("Player"):
+				dynamic_target = hitBody
+				return
+			elif hitBody is TileMap:
+				var coords = tile_map.get_coords_for_body_rid(ray_cast.get_collider_rid())
+				static_target = tile_map.map_to_local(coords)
+				return
+	findTarget()
