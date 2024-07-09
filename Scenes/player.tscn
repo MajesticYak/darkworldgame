@@ -1,18 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4pkwoj6hwf41"]
+[gd_scene load_steps=5 format=3 uid="uid://b4pkwoj6hwf41"]
 
-[ext_resource type="Texture2D" uid="uid://dxfwp50as7tcx" path="res://Assets/icon.svg" id="1_36u38"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ssyy6"]
+[ext_resource type="Texture2D" uid="uid://c4vvrpick6sie" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0096.png" id="2_50qsk"]
+[ext_resource type="PackedScene" uid="uid://c52vkd1pr0x2a" path="res://Scenes/weapon.tscn" id="3_cll6y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b524x"]
-radius = 64.0
+radius = 9.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_ssyy6")
+speed = 250
+accel = 125
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_b524x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_36u38")
+texture = ExtResource("2_50qsk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="Weapon" parent="." instance=ExtResource("3_cll6y")]

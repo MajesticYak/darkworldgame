@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpu344qbdw6ab"]
+
+[ext_resource type="Script" path="res://Scripts/Components/scale_component.gd" id="1_kabqf"]
+
+[node name="ScaleComponent" type="Node"]
+script = ExtResource("1_kabqf")
+sprite = NodePath("")
