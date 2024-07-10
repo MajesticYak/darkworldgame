@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ssyy6"]
 [ext_resource type="Texture2D" uid="uid://c4vvrpick6sie" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0096.png" id="2_50qsk"]
-[ext_resource type="PackedScene" uid="uid://c52vkd1pr0x2a" path="res://Scenes/weapon.tscn" id="3_cll6y"]
+[ext_resource type="PackedScene" path="res://Scenes/weapon.tscn" id="3_cll6y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b524x"]
 radius = 9.0

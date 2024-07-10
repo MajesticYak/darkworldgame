@@ -20,7 +20,7 @@ func unregisterArea(area: InteractionArea):
 	if (indexOfArea != -1):
 		active_areas.remove_at(indexOfArea)
 		
-func _process(delta):
+func _process(_delta):
 	#if player is in multiple interactable areas, choose the closest one to display
 	if (active_areas.size() > 0 && can_interact):
 		#custom sort compares two areas (a,b). If returns true, then array order is unchanged, otherwise swaps them
