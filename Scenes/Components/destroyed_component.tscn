@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpkscowbdnmu8"]
+
+[ext_resource type="Script" path="res://Scripts/Components/destroyed_component.gd" id="1_714b4"]
+
+[node name="DestroyedComponent" type="Node"]
+script = ExtResource("1_714b4")

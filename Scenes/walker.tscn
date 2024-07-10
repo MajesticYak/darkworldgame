@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2h6g3xc34kus"]
+[gd_scene load_steps=13 format=3 uid="uid://d2h6g3xc34kus"]
 
 [ext_resource type="Script" path="res://Scripts/walker.gd" id="1_1x68h"]
 [ext_resource type="Texture2D" uid="uid://bf6hj4daiwr8q" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0122.png" id="1_bq83u"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://32aw63skwci" path="res://Scenes/Components/flash_component.tscn" id="5_j3fx0"]
 [ext_resource type="PackedScene" uid="uid://cpu344qbdw6ab" path="res://Scenes/Components/scale_component.tscn" id="6_q5eo8"]
 [ext_resource type="PackedScene" uid="uid://duf88sosua32n" path="res://Scenes/Components/shake_component.tscn" id="7_lw5gr"]
+[ext_resource type="PackedScene" uid="uid://bpkscowbdnmu8" path="res://Scenes/Components/destroyed_component.tscn" id="8_tcfef"]
+[ext_resource type="PackedScene" uid="uid://ceyqpmxcdqjkr" path="res://Scenes/Components/spawner_component.tscn" id="9_7w5k2"]
+[ext_resource type="PackedScene" uid="uid://cc3r1si6cgaqd" path="res://Scenes/baby_walker.tscn" id="10_su200"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_le72r"]
 
@@ -23,8 +26,11 @@ texture = ExtResource("1_bq83u")
 shape = SubResource("CircleShape2D_le72r")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_n8muq")]
+MAX_HEALTH = 5.0
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_3qaax")]
+collision_layer = 4
+collision_mask = 2
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
@@ -39,3 +45,11 @@ sprite = NodePath("../Sprite2D")
 
 [node name="ShakeComponent" parent="." node_paths=PackedStringArray("node") instance=ExtResource("7_lw5gr")]
 node = NodePath("../Sprite2D")
+
+[node name="DestroyedComponent" parent="." node_paths=PackedStringArray("actor", "health_component", "destroy_effect_spawner_component") instance=ExtResource("8_tcfef")]
+actor = NodePath("..")
+health_component = NodePath("../HealthComponent")
+destroy_effect_spawner_component = NodePath("../SpawnerComponent")
+
+[node name="SpawnerComponent" parent="." instance=ExtResource("9_7w5k2")]
+scene = ExtResource("10_su200")

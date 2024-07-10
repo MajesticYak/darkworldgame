@@ -8,6 +8,7 @@ func _ready():
 	health = MAX_HEALTH
 
 func take_damage(attack : Attack):
+	health_changed.emit()
 	health -= attack.attack_damage
 	
 	if owner.has_method("stun"):
@@ -24,6 +25,10 @@ func take_damage(attack : Attack):
 		owner.tween_shake()
 	
 	if health <= 0:
-		print("died")
+		no_health.emit()
 		owner.death()
-	
+
+# Create signals for health
+signal health_changed() # Emit when the health value has changed
+signal no_health() # Emit when there is no health left
+

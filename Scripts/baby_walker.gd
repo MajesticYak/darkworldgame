@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 @export var speed : float  # speed in pixels/sec
 @export var accel : float
-@export var player : CharacterBody2D
+
+@onready var player = get_tree().get_first_node_in_group("Player")
 
 @onready var flash_component : FlashComponent = $FlashComponent as FlashComponent
 @onready var scale_component : ScaleComponent = $ScaleComponent as ScaleComponent
@@ -39,4 +40,4 @@ func tween_shake():
 	shake_component.tween_shake()
 
 func death():
-	print("I died!")
+	queue_free()
