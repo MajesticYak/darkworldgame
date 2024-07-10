@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://rcyelgi322w8"]
+[gd_scene load_steps=7 format=3 uid="uid://rcyelgi322w8"]
 
 [ext_resource type="Texture2D" uid="uid://bdajvoka6tgmg" path="res://Assets/kenney_tiny-dungeon/Tilemap/tilemap_packed.png" id="1_nvwfy"]
 [ext_resource type="PackedScene" uid="uid://b4pkwoj6hwf41" path="res://Scenes/player.tscn" id="1_t72km"]
 [ext_resource type="PackedScene" uid="uid://d2h6g3xc34kus" path="res://Scenes/walker.tscn" id="3_enotv"]
+[ext_resource type="PackedScene" uid="uid://bseiog857av1" path="res://Scenes/resource.tscn" id="4_fv54d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v4l6x"]
 texture = ExtResource("1_nvwfy")
@@ -159,3 +160,6 @@ accel = 25.0
 player = NodePath("../Player")
 
 [node name="World" type="Node2D" parent="."]
+
+[node name="Resource" parent="." instance=ExtResource("4_fv54d")]
+position = Vector2(423, 130)

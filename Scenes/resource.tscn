@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://bseiog857av1"]
+
+[ext_resource type="Script" path="res://Scripts/resource.gd" id="1_ggyqy"]
+[ext_resource type="Texture2D" uid="uid://riwx4lgfsjyx" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0063.png" id="1_l6wb5"]
+[ext_resource type="Script" path="res://Scripts/Components/health_component.gd" id="2_nwrvp"]
+[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="3_x2cw8"]
+[ext_resource type="Script" path="res://Scripts/Components/flash_component.gd" id="5_3xj7n"]
+[ext_resource type="Script" path="res://Scripts/Components/scale_component.gd" id="6_he3mf"]
+[ext_resource type="Script" path="res://Scripts/Components/shake_component.gd" id="7_2ad20"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wrhjd"]
+radius = 9.05539
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8j8lg"]
+
+[node name="Resource" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_ggyqy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wrhjd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_l6wb5")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("2_nwrvp")
+MAX_HEALTH = 3.0
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_x2cw8")
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_8j8lg")
+
+[node name="FlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("5_3xj7n")
+sprite = NodePath("../Sprite2D")
+
+[node name="ScaleComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("6_he3mf")
+sprite = NodePath("../Sprite2D")
+
+[node name="ShakeComponent" type="Node" parent="." node_paths=PackedStringArray("node")]
+script = ExtResource("7_2ad20")
+node = NodePath("../Sprite2D")

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dkgxnn4owq78j"]
+
+[node name="Pickupable Resource" type="Node2D"]
