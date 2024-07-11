@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://djy75ghrogulu"]
+[gd_scene load_steps=11 format=3 uid="uid://djy75ghrogulu"]
 
 [ext_resource type="Script" path="res://Scripts/brawler.gd" id="1_qjui0"]
 [ext_resource type="Script" path="res://Scripts/State Machine.gd" id="2_xwlgh"]
@@ -15,6 +15,9 @@ radius = 64.0
 max_value = 1.2
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.185393, 1.2033), 0.0, 0.0, 0, 0, Vector2(0.808989, 1.2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2q8kl"]
+radius = 700.0
 
 [node name="Brawler" type="CharacterBody2D"]
 scale = Vector2(0.1, 0.1)
@@ -36,13 +39,11 @@ texture = ExtResource("6_nsnbm")
 script = ExtResource("2_xwlgh")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+[node name="Idle" type="Node" parent="State Machine"]
 script = ExtResource("3_uyhfb")
-enemy = NodePath("../..")
 
-[node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+[node name="Follow" type="Node" parent="State Machine"]
 script = ExtResource("5_a3c3o")
-enemy = NodePath("../..")
 
 [node name="Attack" type="Node" parent="State Machine"]
 script = ExtResource("6_1x2qt")
@@ -56,9 +57,14 @@ debug_enabled = true
 wait_time = 0.3
 autostart = true
 
-[node name="AttackArea" type="Node2D" parent="."]
+[node name="Attack" type="Node2D" parent="."]
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="AttackArea"]
+[node name="Area2D" type="Area2D" parent="Attack"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Area2D"]
+polygon = PackedVector2Array(0, 0, 0, -200, 60, -190, 100, -170, 140, -140, 170, -100, 190, -50, 200, 0, 190, 50, 170, 100, 140, 140, 100, 170, 60, 190, 0, 200)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Attack"]
 emitting = false
 amount = 1000
 lifetime = 0.25
@@ -77,12 +83,12 @@ scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_t0vg8")
 color = Color(0.929715, 0.929715, 0.929715, 1)
 
-[node name="RayCast2D" type="RayCast2D" parent="AttackArea"]
-visible = false
-target_position = Vector2(0, 220)
+[node name="DetectionArea" type="Area2D" parent="."]
 
-[node name="Sweep" type="RayCast2D" parent="."]
-scale = Vector2(1, 1)
-target_position = Vector2(0, 768)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_2q8kl")
+
+[node name="RayCast2D" type="RayCast2D" parent="DetectionArea"]
+target_position = Vector2(0, 700)
 
 [connection signal="timeout" from="Navigation/Timer" to="State Machine/Follow" method="_on_timer_timeout"]

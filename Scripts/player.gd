@@ -8,7 +8,5 @@ func _physics_process(_delta):
 
 	move_and_slide()
 	
-	#if Input.is_action_just_pressed("open options"):
-		#implement this later so that player can access options in game
-		#var optionsInstance = load("res://Scenes/menu_options.tscn").instantiate()
-		#get_tree().current_scene.add_child(optionsInstance)
+func take_damage():
+	pass
