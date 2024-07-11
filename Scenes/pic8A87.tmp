@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkgxnn4owq78j"]
+[gd_scene load_steps=8 format=3 uid="uid://dkgxnn4owq78j"]
 
 [ext_resource type="Script" path="res://Scripts/pickupable_resource.gd" id="1_ha5qs"]
 [ext_resource type="Script" path="res://Interaction/interaction area/interaction_area.gd" id="1_icfk0"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/Components/shake_component.gd" id="4_grjf8"]
 [ext_resource type="Script" path="res://Scripts/Components/scale_component.gd" id="5_u1tp6"]
 [ext_resource type="Script" path="res://Scripts/Components/flash_component.gd" id="6_6f373"]
-[ext_resource type="Script" path="res://Scripts/Components/float_component.gd" id="7_l3bli"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sbqvx"]
 radius = 19.0263
@@ -35,10 +34,6 @@ sprite = NodePath("../Sprite2D")
 
 [node name="FlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("6_6f373")
-sprite = NodePath("../Sprite2D")
-
-[node name="FloatComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
-script = ExtResource("7_l3bli")
 sprite = NodePath("../Sprite2D")
 
 [connection signal="body_entered" from="InteractionArea" to="InteractionArea" method="_on_body_entered"]

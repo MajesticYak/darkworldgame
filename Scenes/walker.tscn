@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://duf88sosua32n" path="res://Scenes/Components/shake_component.tscn" id="7_lw5gr"]
 [ext_resource type="PackedScene" uid="uid://bpkscowbdnmu8" path="res://Scenes/Components/destroyed_component.tscn" id="8_tcfef"]
 [ext_resource type="PackedScene" uid="uid://ceyqpmxcdqjkr" path="res://Scenes/Components/spawner_component.tscn" id="9_7w5k2"]
-[ext_resource type="PackedScene" uid="uid://cc3r1si6cgaqd" path="res://Scenes/baby_walker.tscn" id="10_su200"]
+[ext_resource type="PackedScene" uid="uid://iqa6ui5jpqae" path="res://Effects/explosion_effect.tscn" id="10_arnlc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_le72r"]
 
@@ -26,7 +26,7 @@ texture = ExtResource("1_bq83u")
 shape = SubResource("CircleShape2D_le72r")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_n8muq")]
-MAX_HEALTH = 5.0
+MAX_HEALTH = 1.0
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_3qaax")]
 collision_layer = 4
@@ -52,4 +52,4 @@ health_component = NodePath("../HealthComponent")
 destroy_effect_spawner_component = NodePath("../SpawnerComponent")
 
 [node name="SpawnerComponent" parent="." instance=ExtResource("9_7w5k2")]
-scene = ExtResource("10_su200")
+scene = ExtResource("10_arnlc")

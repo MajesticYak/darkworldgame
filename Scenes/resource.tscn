@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bseiog857av1"]
+[gd_scene load_steps=13 format=3 uid="uid://bseiog857av1"]
 
 [ext_resource type="Script" path="res://Scripts/resource.gd" id="1_ggyqy"]
 [ext_resource type="Texture2D" uid="uid://riwx4lgfsjyx" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0063.png" id="1_l6wb5"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://Scripts/Components/flash_component.gd" id="5_3xj7n"]
 [ext_resource type="Script" path="res://Scripts/Components/scale_component.gd" id="6_he3mf"]
 [ext_resource type="Script" path="res://Scripts/Components/shake_component.gd" id="7_2ad20"]
+[ext_resource type="Script" path="res://Scripts/Components/spawner_component.gd" id="8_lhp4f"]
+[ext_resource type="PackedScene" uid="uid://dkgxnn4owq78j" path="res://Scenes/pickupable_resource.tscn" id="9_qaoux"]
+[ext_resource type="Script" path="res://Scripts/Components/destroyed_component.gd" id="9_xdi7k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wrhjd"]
 radius = 9.05539
@@ -48,3 +51,13 @@ sprite = NodePath("../Sprite2D")
 [node name="ShakeComponent" type="Node" parent="." node_paths=PackedStringArray("node")]
 script = ExtResource("7_2ad20")
 node = NodePath("../Sprite2D")
+
+[node name="SpawnerComponent" type="Node2D" parent="."]
+script = ExtResource("8_lhp4f")
+scene = ExtResource("9_qaoux")
+
+[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "health_component", "destroy_effect_spawner_component")]
+script = ExtResource("9_xdi7k")
+actor = NodePath("..")
+health_component = NodePath("../HealthComponent")
+destroy_effect_spawner_component = NodePath("../SpawnerComponent")
