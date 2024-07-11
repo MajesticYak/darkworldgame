@@ -3,9 +3,6 @@ class_name Brawler
 
 @onready var attack_area = $Attack/Area2D
 
-func _ready():
-	main_target = $"../StaticBody2D"
-
 func attack():
 	$Attack/CPUParticles2D.emitting = true
 	var hit_bodies = attack_area.get_overlapping_bodies()

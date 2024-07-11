@@ -2,10 +2,10 @@ extends CharacterBody2D
 class_name Enemy
 
 @onready var detection_area = $DetectionArea
-@onready var tile_map = $"../World/TileMap"
+@onready var tile_map = $"../TileMap"
 @onready var ray_cast = $DetectionArea/RayCast2D
 
-@export var attack_range = 15
+@export var attack_range = 18
 @export var main_target : PhysicsBody2D = null #if main target will attack in dir, otherwise when no objects sleep
 
 func _physics_process(_delta):

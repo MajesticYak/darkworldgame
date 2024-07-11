@@ -2,7 +2,7 @@ extends State
 class_name EnemyFollow
 
 @onready var enemy = $"../.."
-@export var move_speed := 60
+@export var move_speed := 100
 @export var target : PhysicsBody2D
 
 @onready var navigation_agent: NavigationAgent2D = $"../../Navigation/NavigationAgent2D"

@@ -12,4 +12,7 @@ func _physics_process(_delta):
 	velocity.y = move_toward(velocity.y, speed * direction.y, accel)
 	
 	move_and_slide()
+	
+func take_damage():
+	pass
 
