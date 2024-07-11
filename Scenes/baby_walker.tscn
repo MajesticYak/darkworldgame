@@ -1,0 +1,65 @@
+[gd_scene load_steps=13 format=3 uid="uid://cc3r1si6cgaqd"]
+
+[ext_resource type="Script" path="res://Scripts/Components/health_component.gd" id="1_7clx5"]
+[ext_resource type="Texture2D" uid="uid://c3t23plmnjbir" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0123.png" id="1_fac5o"]
+[ext_resource type="Script" path="res://Scripts/baby_walker.gd" id="1_w6bg6"]
+[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="2_wh53w"]
+[ext_resource type="Script" path="res://Scripts/Components/flash_component.gd" id="3_lbk8x"]
+[ext_resource type="Script" path="res://Scripts/Components/scale_component.gd" id="4_pjqja"]
+[ext_resource type="Script" path="res://Scripts/Components/shake_component.gd" id="5_uhsly"]
+[ext_resource type="Script" path="res://Scripts/Components/destroyed_component.gd" id="6_5tv7q"]
+[ext_resource type="Script" path="res://Scripts/Components/spawner_component.gd" id="7_vwpbl"]
+[ext_resource type="PackedScene" uid="uid://iqa6ui5jpqae" path="res://Effects/explosion_effect.tscn" id="8_b30ih"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x22kk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uqd25"]
+radius = 11.0454
+
+[node name="BabyWalker" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_w6bg6")
+speed = 100.0
+accel = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fac5o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x22kk")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("1_7clx5")
+MAX_HEALTH = 3.0
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("2_wh53w")
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_uqd25")
+
+[node name="FlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_lbk8x")
+sprite = NodePath("../Sprite2D")
+
+[node name="ScaleComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("4_pjqja")
+sprite = NodePath("../Sprite2D")
+
+[node name="ShakeComponent" type="Node" parent="." node_paths=PackedStringArray("node")]
+script = ExtResource("5_uhsly")
+node = NodePath("../Sprite2D")
+
+[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "health_component", "destroy_effect_spawner_component")]
+script = ExtResource("6_5tv7q")
+actor = NodePath("..")
+health_component = NodePath("../HealthComponent")
+destroy_effect_spawner_component = NodePath("../SpawnerComponent")
+
+[node name="SpawnerComponent" type="Node2D" parent="."]
+script = ExtResource("7_vwpbl")
+scene = ExtResource("8_b30ih")

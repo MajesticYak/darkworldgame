@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dglxtjpcpwhqd"]
+
+[ext_resource type="Script" path="res://Scripts/Components/onetime_animated_effect_component.gd" id="1_b3sm7"]
+
+[node name="OneTimeAnimatedEffect" type="AnimatedSprite2D"]
+script = ExtResource("1_b3sm7")
