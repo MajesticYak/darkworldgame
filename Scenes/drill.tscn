@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://veujpfhktq0t"]
+
+[ext_resource type="Texture2D" uid="uid://bxgwmoxboon4h" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0074.png" id="1_m7uw0"]
+[ext_resource type="Script" path="res://Scripts/drill.gd" id="1_w2wbb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfytg"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7w1w5"]
+size = Vector2(12, 12)
+
+[node name="Drill" type="StaticBody2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_w2wbb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_m7uw0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jfytg")
+
+[node name="DrillArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrillArea"]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_7w1w5")
+
+[node name="DrillTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="DrillArea" to="." method="_on_drill_area_area_entered"]
+[connection signal="timeout" from="DrillTimer" to="." method="_on_drill_timer_timeout"]

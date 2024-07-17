@@ -17,6 +17,8 @@ func Enter():
 			navigation_agent.target_position = enemy.main_target.position
 	
 func Physics_Update(_delta: float):
+	if enemy.is_stunned:
+		return
 	if enemy.main_target and !target:
 		var targ = enemy.find_nearest_target()
 		if targ:

@@ -7,8 +7,16 @@ class_name Enemy
 
 @export var attack_range = 18
 @export var main_target : PhysicsBody2D = null #if main target will attack in dir, otherwise when no objects sleep
+@export var knockback_accel : int = 25
+
+var is_stunned = false
 
 func _physics_process(_delta):
+	if is_stunned:
+		velocity.x = move_toward(velocity.x, 0, knockback_accel)
+		velocity.y = move_toward(velocity.y, 0, knockback_accel)
+		move_and_slide()
+		return
 	move_and_slide()
 
 func find_nearest_target():

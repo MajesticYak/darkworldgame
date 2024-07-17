@@ -26,7 +26,8 @@ func take_damage(attack : Attack):
 	
 	if health <= 0:
 		no_health.emit()
-		owner.death()
+		if owner.has_method("death"):
+			owner.death()
 
 # Create signals for health
 signal health_changed() # Emit when the health value has changed

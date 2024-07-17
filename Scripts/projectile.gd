@@ -1,11 +1,11 @@
 extends Area2D
 
 # Weapon stats
-var speed : float = 500
-var max_range : float = 1200
-var attack_damage : float = 1.0
-var knockback_force : float = 250.0
-var stun_time : float = 0.3
+var speed : float = 0 #500
+var max_range : float = 0 #1200
+var attack_damage : float = 0 #1.0
+var knockback_force : float = 0 #250.0
+var stun_time : float = 0 #0.3
 
 var travelled_distance = 0
 
