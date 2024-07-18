@@ -17,8 +17,8 @@
 radius = 7.28011
 
 [sub_resource type="Curve" id="Curve_t0vg8"]
-max_value = 1.2
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.185393, 1.2033), 0.0, 0.0, 0, 0, Vector2(0.808989, 1.2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.37013, 2), 0.0, 0.0, 0, 0, Vector2(0.733766, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2q8kl"]
@@ -54,21 +54,12 @@ script = ExtResource("5_a3c3o")
 [node name="Attack" type="Node" parent="State Machine"]
 script = ExtResource("6_1x2qt")
 
-[node name="Navigation" type="Node2D" parent="."]
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation"]
-debug_enabled = true
-
-[node name="Timer" type="Timer" parent="Navigation"]
-wait_time = 0.3
-autostart = true
-
 [node name="Attack" type="Node2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="Attack"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Area2D"]
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.15, 0.15)
 polygon = PackedVector2Array(0, 0, 0, -200, 60, -190, 100, -170, 140, -140, 170, -100, 190, -50, 200, 0, 190, 50, 170, 100, 140, 140, 100, 170, 60, 190, 0, 200)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Attack"]
@@ -80,7 +71,7 @@ one_shot = true
 explosiveness = 0.7
 texture = ExtResource("7_uq7xs")
 emission_shape = 4
-emission_points = PackedVector2Array(0, 190, 0, 150, 0, 110)
+emission_points = PackedVector2Array(0, 290, 0, 220, 0, 150)
 emission_colors = PackedColorArray()
 spread = 0.0
 gravity = Vector2(0, 0)
@@ -124,5 +115,3 @@ sprite = NodePath("../Sprite2D")
 [node name="ScaleComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("12_seoy6")
 sprite = NodePath("../Sprite2D")
-
-[connection signal="timeout" from="Navigation/Timer" to="State Machine/Follow" method="_on_timer_timeout"]

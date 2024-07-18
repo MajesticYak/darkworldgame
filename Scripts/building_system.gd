@@ -17,10 +17,16 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-func _input(_event):
+func _physics_process(_delta):
+	tile_map.clear_layer(2)
+	if is_building:
+		var mouse_pos = get_global_mouse_position()
+		var tile_mouse_pos = tile_map.local_to_map(mouse_pos)
+		if tile_map.get_cell_source_id(1, tile_mouse_pos) != -1:
+			tile_map.set_cell(2, tile_mouse_pos, 1, Vector2.ZERO, 1)
+		else:
+			tile_map.set_cell(2, tile_mouse_pos, 1, Vector2.ZERO, 0)
+			
 	if Input.is_action_just_pressed("build"): # Enter build mode
 		is_building = not is_building
 		ui.buttons_toggle_visibility()
@@ -36,3 +42,7 @@ func _input(_event):
 		
 		if tile_map.get_cell_source_id(player_built_layer, tile_mouse_pos) == empty_tile_id:
 			tile_map.set_cell(player_built_layer, tile_mouse_pos, source_id, atlas_cord, tile_id)
+		else:
+			var obj = tile_map.find_obj(tile_mouse_pos)
+			if obj:
+				obj.kill()
