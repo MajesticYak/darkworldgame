@@ -3,6 +3,9 @@ class_name Brawler
 
 @onready var attack_area = $Attack/Area2D
 
+@export var attack_range = 24
+@export var speed = 140
+
 @onready var flash_component : FlashComponent = $FlashComponent as FlashComponent
 @onready var scale_component : ScaleComponent = $ScaleComponent as ScaleComponent
 @onready var shake_component : ShakeComponent = $ShakeComponent as ShakeComponent

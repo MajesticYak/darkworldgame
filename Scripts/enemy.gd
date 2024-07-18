@@ -5,8 +5,7 @@ class_name Enemy
 @onready var tile_map = $"../TileMap"
 @onready var ray_cast = $DetectionArea/RayCast2D
 
-@export var attack_range = 18
-@export var main_target : PhysicsBody2D = null #if main target will attack in dir, otherwise when no objects sleep
+@onready var main_target : PhysicsBody2D = $"../Player" #if main target will attack in dir, otherwise when no objects sleep
 @export var knockback_accel : int = 25
 
 var is_stunned = false

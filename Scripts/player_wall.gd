@@ -2,13 +2,12 @@ extends StaticBody2D
 var health = 4
 @onready var tile_map : TileMap = $/root/Main/TileMap
 var coords : Vector2i
-var atlas_coords : Vector2i
 
 
 func _ready():
 	coords = tile_map.local_to_map(position)
-	atlas_coords = tile_map.get_cell_atlas_coords(0, coords)
-	tile_map.set_cell(0, coords, 0, atlas_coords, 1)
+	tile_map.astar_grid.set_point_solid(coords)
+	
 	
 func take_damage():
 	health = health - 1
@@ -19,5 +18,6 @@ func take_damage():
 	
 func kill():
 	tile_map.erase_cell(1,coords)
-	tile_map.set_cell(0, coords, 0, atlas_coords, 0)
+	tile_map.astar_grid.set_point_solid(coords, 0)
+	queue_free()
 

@@ -8,10 +8,9 @@ var is_mining = false
 
 func _on_drill_area_area_entered(area):
 	if area.name == "Node Area":
-		print("Mining node!")
 		is_mining = true
 		drill_timer.start()
 
 
 func _on_drill_timer_timeout():
-	print("+1 resource collected")
+	pass
