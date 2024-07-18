@@ -5,6 +5,7 @@ extends Node2D
 
 # Reload properties
 @export var max_ammo : int
+@export var reserve_ammo : int 
 @onready var current_ammo : int = max_ammo
 @export var reload_time : float = 0.4
 
@@ -59,10 +60,23 @@ func spawn_bullet():
 	%ShootingPoint.add_child(bullet_instance)
 
 func reload():
+	if reserve_ammo <= 0:
+		return
+	
 	reload_timer.start(reload_time)
 
 func refill_ammo():
-	current_ammo = max_ammo
+	var ammo_missing : = max_ammo - current_ammo
+	
+	if reserve_ammo >= ammo_missing:
+		set_reserve_ammo(reserve_ammo - ammo_missing)
+		current_ammo = max_ammo
+	else:
+		current_ammo += reserve_ammo
+		set_reserve_ammo(0)
+
+func set_reserve_ammo(value):
+	reserve_ammo = value
 
 func _on_reload_timer_timeout():
 	refill_ammo()

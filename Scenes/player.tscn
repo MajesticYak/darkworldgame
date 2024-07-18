@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://c52vkd1pr0x2a" path="res://Scenes/weapon.tscn" id="3_cll6y"]
 [ext_resource type="PackedScene" uid="uid://bks3m4fleopb2" path="res://Scenes/building_system.tscn" id="4_du0xl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvgu0"]
-size = Vector2(16, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x4onb"]
+radius = 7.5
+height = 15.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 32
@@ -15,7 +16,7 @@ speed = 300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_fvgu0")
+shape = SubResource("CapsuleShape2D_x4onb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_50qsk")

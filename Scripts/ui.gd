@@ -5,6 +5,7 @@ extends CanvasLayer
 
 @onready var fps_label = $FPSLabel
 @onready var ammo_label = $AmmoLabel
+@onready var reserve_ammo_label = $ReserveAmmoLabel
 
 @onready var button = $Button
 @onready var button_2 = $Button2
@@ -19,6 +20,7 @@ func _ready():
 func _process(_delta):
 	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 	ammo_label.text = "Ammo: " + str(player.weapon.current_ammo)
+	reserve_ammo_label.text = "Reserve Ammo: " + str(player.weapon.reserve_ammo)
 
 func buttons_toggle_visibility():
 	button.visible = not button.visible
