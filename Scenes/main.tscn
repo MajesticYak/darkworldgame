@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://rcyelgi322w8"]
+[gd_scene load_steps=21 format=3 uid="uid://rcyelgi322w8"]
 
 [ext_resource type="Texture2D" uid="uid://bdajvoka6tgmg" path="res://Assets/kenney_tiny-dungeon/Tilemap/tilemap_packed.png" id="1_nvwfy"]
 [ext_resource type="PackedScene" uid="uid://b4pkwoj6hwf41" path="res://Scenes/player.tscn" id="1_t72km"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cbk3uy65opebb" path="res://Scenes/ore_node.tscn" id="5_awb68"]
 [ext_resource type="Script" path="res://Scenes/TileMap.gd" id="7_mlj2i"]
 [ext_resource type="PackedScene" uid="uid://baqmwkxl5jxym" path="res://Scenes/ui.tscn" id="8_jvxac"]
+[ext_resource type="PackedScene" uid="uid://djy75ghrogulu" path="res://Scenes/brawler.tscn" id="10_tklay"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0nii5"]
 vertices = PackedVector2Array(8, -4, 8, 4, 4, 8, -4, 8, -8, 4, -8, -4, -4, -8, 4, -8)
@@ -248,3 +249,5 @@ position = Vector2(149, 108)
 
 [node name="Resource" parent="." instance=ExtResource("4_fv54d")]
 position = Vector2(305, 181)
+
+[node name="Brawler" parent="." instance=ExtResource("10_tklay")]
