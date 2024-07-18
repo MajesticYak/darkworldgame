@@ -1,7 +1,5 @@
 extends TileMap
 
-@onready var detection_area : Area2D = $Area2D
-
 var astar_grid = AStarGrid2D
 
 func _ready():
