@@ -25,6 +25,5 @@ zoom = Vector2(1.5, 1.5)
 
 [node name="Weapon" parent="." instance=ExtResource("3_cll6y")]
 reload_time = 1.0
-attack_damage = 3.0
 
 [node name="BuildingSystem" parent="." instance=ExtResource("4_du0xl")]
