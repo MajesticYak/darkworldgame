@@ -3,8 +3,8 @@ extends CharacterBody2D
 @onready var building_system : Node2D = $BuildingSystem as Node2D
 @onready var weapon : Node2D = $Weapon as Node2D
 
-@export var speed : float = 400  # speed in pixels/sec
-@export var accel : float = 100
+@export var speed : float = 140  # speed in pixels/sec
+@export var accel : float = 40
 
 func _physics_process(_delta):
 	var _mouse_position = get_global_mouse_position()
